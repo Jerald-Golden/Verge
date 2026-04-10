@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
     <head>
         <meta charset="UTF-8" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -9,16 +9,20 @@
             rel="stylesheet"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#f4eeff" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#424874" />
+        <meta name="theme-color" content="#dcd6f7" />
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <title>Verge: Endless Road</title>
+        <style>
+            body {
+                background-color: #dcd6f7;
+            }
+        </style>
     </head>
-    <body>
+    <body oncontextmenu="return false">
         <div id="root"></div>
         <script type="module" src="/src/main.tsx"></script>
     </body>

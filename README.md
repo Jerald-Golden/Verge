@@ -1,8 +1,6 @@
 # Verge: Endless Road
 
-Web app scaffold: **React 19**, **TypeScript**, **Vite**, and **SCSS**. **ESLint** and **Prettier** are configured. The UI is a minimal shell: a main heading with the project name.
-
-**Static assets:** favicons and PNG icons under `public/`, plus `site.webmanifest` for install / PWA metadata. The document title matches the project name.
+Web app scaffold: **React 19**, **TypeScript**, **Vite**, **React Router**, and **SCSS**. **ESLint** and **Prettier** are configured.
 
 ## Getting started
 
@@ -30,8 +28,20 @@ Then open the URL Vite prints (usually `http://localhost:5173`).
 
 ```
 src/
-  components/App/   # Root React component
-  styles/           # globals.scss, app.scss, abstracts/ (palette, spacing, borders, radii, motion, z-index, glass, mixins)
-  main.tsx          # Entry
-public/             # Favicons, icons, site.webmanifest
+  components/
+    App.tsx           # LoadingProvider + BrowserRouter
+    Verge.tsx         # Routes; landing at /
+    pages/
+      LandingPage/
+      LoadingScreen/  # Overlay; loadingConfig.ts (timing + labels)
+  context/
+    LoadingContext.tsx
+  styles/
+    main.scss         # Single entry (@use base, components, pages)
+    abstracts/        # Design tokens and mixins
+    base/             # Global reset, :root, body
+    components/       # e.g. app shell
+    pages/            # landing, loading screen, …
+  main.tsx            # StrictMode root; imports styles/main.scss
+public/               # Favicons, icons, site.webmanifest
 ```

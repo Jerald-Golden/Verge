@@ -1,5 +1,5 @@
 @use 'sass:color';
-@use './abstracts' as *;
+@use '../abstracts' as *;
 
 @mixin verge-vars-light {
     --verge-bg: #{$color-bg};
@@ -26,16 +26,16 @@
 
     --verge-bg-gradient:
         radial-gradient(
-            ellipse 100% 85% at 92% 8%,
-            #{color.mix($palette-300, $palette-100, 38%)} 0%,
+            ellipse 95% 75% at 90% 10%,
+            #{color.mix($palette-100, $palette-200, 35%)} 0%,
             transparent 52%
         ),
-        radial-gradient(ellipse 80% 55% at 8% 88%, #{$palette-200} 0%, transparent 50%),
+        radial-gradient(ellipse 80% 55% at 10% 90%, #{$palette-100} 0%, transparent 48%),
         linear-gradient(
-            165deg,
-            #{$palette-100} 0%,
-            #{color.mix($palette-200, $palette-100, 35%)} 48%,
-            #{color.mix($palette-100, $palette-300, 92%)} 100%
+            168deg,
+            #{$palette-200} 0%,
+            #{color.mix($palette-100, $palette-200, 42%)} 50%,
+            #{$palette-200} 100%
         );
 }
 
@@ -85,7 +85,6 @@
 :root {
     @include verge-vars-light;
 
-    // Structural tokens (shared across light / dark)
     --verge-border-width-0: #{$border-width-0};
     --verge-border-width-hairline: #{$border-width-hairline};
     --verge-border-width-2: #{$border-width-2};
@@ -114,6 +113,7 @@
     --verge-duration-normal: #{$duration-normal};
     --verge-duration-slow: #{$duration-slow};
     --verge-duration-slower: #{$duration-slower};
+    --verge-duration-exit: #{$duration-exit};
 
     --verge-ease-default: #{$ease-default};
     --verge-ease-in: #{$ease-in};

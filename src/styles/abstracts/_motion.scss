@@ -4,6 +4,7 @@ $duration-fast: 120ms;
 $duration-normal: 200ms;
 $duration-slow: 320ms;
 $duration-slower: 480ms;
+$duration-exit: 1.15s;
 
 // Easing (calm UI; no harsh snaps)
 $ease-default: cubic-bezier(0.4, 0, 0.2, 1);
@@ -18,6 +19,7 @@ $durations: (
     normal: $duration-normal,
     slow: $duration-slow,
     slower: $duration-slower,
+    exit: $duration-exit,
 );
 
 $easings: (

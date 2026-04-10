@@ -1,0 +1,110 @@
+@use '../abstracts' as *;
+
+.loading-screen {
+    &__sr {
+        @include visually-hidden;
+    }
+
+    position: fixed;
+    inset: 0;
+    z-index: $z-overlay;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-5;
+    font-family: var(--verge-font-sans);
+    color: var(--verge-text);
+    background-color: var(--verge-bg);
+    opacity: 1;
+    transition:
+        opacity var(--verge-duration-exit) var(--verge-ease-out),
+        visibility 0s linear;
+
+    &--exiting {
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        transition:
+            opacity var(--verge-duration-exit) var(--verge-ease-out),
+            visibility 0s linear var(--verge-duration-exit);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transition-duration: var(--verge-duration-normal);
+
+        &--exiting {
+            transition-duration: var(--verge-duration-normal);
+        }
+    }
+
+    &__stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $space-3;
+        width: min(18rem, 85vw);
+        text-align: center;
+    }
+
+    &__primary {
+        margin: 0;
+        font-size: $text-sm;
+        font-weight: $font-weight-medium;
+        line-height: $line-height-tight;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--verge-text);
+        text-shadow: var(--verge-glass-text-shadow);
+    }
+
+    &__secondary {
+        margin: 0;
+        min-height: 1.35em;
+        font-size: $text-xs;
+        font-weight: $font-weight-extralight;
+        line-height: $line-height-snug;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--verge-text-muted);
+        transition: opacity var(--verge-duration-fast) var(--verge-ease-out);
+    }
+
+    &__track {
+        position: relative;
+        width: 100%;
+        height: 3px;
+        border-radius: var(--verge-radius-full);
+        background-color: color-mix(in srgb, var(--verge-text) 9%, var(--verge-bg));
+        box-shadow: inset 0 1px 1px color-mix(in srgb, var(--verge-text) 6%, transparent);
+        overflow: hidden;
+    }
+
+    &__fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+        border-radius: var(--verge-radius-full);
+        background: linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--verge-accent) 78%, var(--verge-surface)),
+            color-mix(in srgb, var(--verge-accent) 42%, var(--verge-text))
+        );
+        animation: loading-screen-fill-grow var(--loading-duration, 600ms) var(--verge-ease-out)
+            forwards;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &__fill {
+            animation: none;
+            width: 100%;
+        }
+    }
+}
+
+@keyframes loading-screen-fill-grow {
+    to {
+        width: 100%;
+    }
+}

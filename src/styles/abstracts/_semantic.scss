@@ -2,9 +2,9 @@
 @use './palette' as *;
 
 // ----- Light (default) -----
-$color-bg: $palette-100;
-$color-surface: $palette-200;
-$color-surface-raised: color.mix($palette-100, $palette-200, 45%);
+$color-bg: $palette-200;
+$color-surface: $palette-100;
+$color-surface-raised: color.mix($palette-100, $palette-200, 52%);
 $color-border: color.mix($palette-900, $palette-200, 16%);
 $color-text: $palette-900;
 $color-text-muted: color.mix($palette-900, $palette-300, 50%);

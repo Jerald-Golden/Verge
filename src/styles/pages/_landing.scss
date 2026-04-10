@@ -1,0 +1,30 @@
+@use '../abstracts' as *;
+
+.landing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding: $space-5;
+    text-align: center;
+    gap: $space-4;
+
+    h1 {
+        font-size: $text-3xl;
+        letter-spacing: -0.03em;
+
+        @include respond-from(md) {
+            font-size: $text-4xl;
+        }
+    }
+
+    &__tagline {
+        margin: 0;
+        max-width: 22rem;
+        font-size: $text-base;
+        font-weight: $font-weight-extralight;
+        line-height: $line-height-relaxed;
+        color: var(--verge-text-muted);
+    }
+}
