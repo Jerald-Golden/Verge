@@ -1,0 +1,143 @@
+@use '../abstracts' as *;
+
+@property --verge-btn-corner-inset {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 2px;
+}
+
+@property --verge-btn-fill-r {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 0px;
+}
+
+.verge-button {
+    --verge-btn-corner-expand: 4px;
+    --verge-btn-corner-inset: 2px;
+    --verge-btn-corner-inset-hover: 8px;
+    --verge-btn-dot-size: 2px;
+    --verge-btn-fill-r: 0px;
+    --verge-btn-fill-ax: 50%;
+    --verge-btn-fill-ay: 50%;
+    --verge-btn-fill-r-max: 120px;
+
+    position: relative;
+    isolation: isolate;
+    overflow: visible;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 9rem;
+    padding: 0 $space-6;
+    font-family: inherit;
+    font-size: $text-sm;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-tight;
+    border: var(--verge-border-width-hairline) solid transparent;
+    border-radius: var(--verge-radius-xs);
+    cursor: pointer;
+    transition:
+        border-color var(--verge-duration-fast) var(--verge-ease-out),
+        box-shadow var(--verge-duration-fast) var(--verge-ease-out),
+        --verge-btn-fill-r var(--verge-duration-normal) var(--verge-ease-out);
+
+    &:hover,
+    &.verge-button--hovered,
+    &:focus-visible {
+        --verge-btn-corner-inset: var(--verge-btn-corner-inset-hover);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: calc(-1 * var(--verge-btn-corner-expand));
+        z-index: 2;
+        pointer-events: none;
+        border-radius: inherit;
+        background-image:
+            radial-gradient(
+                circle var(--verge-btn-dot-size) at var(--verge-btn-corner-inset) var(--verge-btn-corner-inset),
+                currentColor 98%,
+                transparent 100%
+            ),
+            radial-gradient(
+                circle var(--verge-btn-dot-size) at calc(100% - var(--verge-btn-corner-inset))
+                    var(--verge-btn-corner-inset),
+                currentColor 98%,
+                transparent 100%
+            ),
+            radial-gradient(
+                circle var(--verge-btn-dot-size) at calc(100% - var(--verge-btn-corner-inset))
+                    calc(100% - var(--verge-btn-corner-inset)),
+                currentColor 98%,
+                transparent 100%
+            ),
+            radial-gradient(
+                circle var(--verge-btn-dot-size) at var(--verge-btn-corner-inset)
+                    calc(100% - var(--verge-btn-corner-inset)),
+                currentColor 98%,
+                transparent 100%
+            );
+        background-repeat: no-repeat;
+        transition: --verge-btn-corner-inset var(--verge-duration-normal) var(--verge-ease-out);
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--verge-focus-ring);
+        outline-offset: 3px;
+    }
+
+    &.verge-button--hovered {
+        --verge-btn-fill-r: var(--verge-btn-fill-r-max);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transition:
+            border-color var(--verge-duration-fast) var(--verge-ease-out),
+            box-shadow var(--verge-duration-fast) var(--verge-ease-out);
+
+        &::after {
+            transition: none;
+        }
+    }
+}
+
+.verge-button--glass {
+    color: var(--verge-text);
+    background-color: color-mix(in srgb, var(--verge-surface) 72%, transparent);
+    border-color: var(--verge-border);
+    backdrop-filter: blur(var(--verge-glass-blur));
+    box-shadow: var(--verge-glass-inset), var(--verge-shadow-sm);
+
+    &:hover,
+    &.verge-button--hovered {
+        border-color: var(--verge-text-muted);
+    }
+
+    &:active {
+        filter: brightness(0.97);
+    }
+}
+
+.verge-button__fill {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background-color: color-mix(in srgb, var(--verge-accent) 42%, var(--verge-surface) 58%);
+    -webkit-clip-path: circle(var(--verge-btn-fill-r) at var(--verge-btn-fill-ax) var(--verge-btn-fill-ay));
+    clip-path: circle(var(--verge-btn-fill-r) at var(--verge-btn-fill-ax) var(--verge-btn-fill-ay));
+    will-change: clip-path;
+}
+
+.verge-button__label {
+    position: relative;
+    z-index: 1;
+}

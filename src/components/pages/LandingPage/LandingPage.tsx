@@ -1,8 +1,17 @@
+import { VergeButton } from '../../buttons'
+
 export function LandingPage() {
     return (
         <div className="landing">
-            <h1>Verge: Endless Road</h1>
-            <p className="landing__tagline">A calm drive through endless roads.</p>
+            <header className="landing__header">
+                <h1 className="landing__title">VERGE: Endless Road</h1>
+            </header>
+            <div className="landing__main">
+                <div className="landing__actions" role="group" aria-label="Main menu">
+                    <VergeButton onClick={() => {}}>PLAY</VergeButton>
+                    <VergeButton onClick={() => {}}>SETTINGS</VergeButton>
+                </div>
+            </div>
         </div>
     )
 }

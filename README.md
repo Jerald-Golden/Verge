@@ -29,19 +29,25 @@ Then open the URL Vite prints (usually `http://localhost:5173`).
 ```
 src/
   components/
-    App.tsx           # LoadingProvider + BrowserRouter
-    Verge.tsx         # Routes; landing at /
+    App.tsx                 # LoadingProvider + BrowserRouter
+    Verge.tsx               # Routes; landing at /
+    buttons/
+      index.ts              # Re-exports VergeButton, enterSide helpers
+      buttons/VergeButton.tsx
+      functions/enterSide.ts
     pages/
       LandingPage/
-      LoadingScreen/  # Overlay; loadingConfig.ts (timing + labels)
+      LoadingScreen/        # Overlay; loadingConfig.ts (timing + labels)
   context/
     LoadingContext.tsx
   styles/
-    main.scss         # Single entry (@use base, components, pages)
-    abstracts/        # Design tokens and mixins
-    base/             # Global reset, :root, body
-    components/       # e.g. app shell
-    pages/            # landing, loading screen, …
-  main.tsx            # StrictMode root; imports styles/main.scss
-public/               # Favicons, icons, site.webmanifest
+    main.scss               # Entry: @use base, components (app, buttons), pages
+    abstracts/              # Design tokens and mixins
+    base/                   # Global reset, :root, body
+    components/
+      _app.scss
+      _buttons.scss         # .verge-button (glass, clip-path hover fill, corner dots)
+    pages/                  # landing, loading screen, …
+  main.tsx                  # StrictMode root; imports styles/main.scss
+public/                     # Favicons, icons, site.webmanifest
 ```
