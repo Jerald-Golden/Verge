@@ -1,0 +1,16 @@
+// Opacity steps (disabled / hint / overlay)
+$opacity-0: 0;
+$opacity-disabled: 0.38;
+$opacity-muted: 0.55;
+$opacity-secondary: 0.72;
+$opacity-strong: 0.88;
+$opacity-full: 1;
+
+$opacities: (
+    0: $opacity-0,
+    disabled: $opacity-disabled,
+    muted: $opacity-muted,
+    secondary: $opacity-secondary,
+    strong: $opacity-strong,
+    full: $opacity-full,
+);

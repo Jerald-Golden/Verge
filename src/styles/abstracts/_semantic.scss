@@ -1,0 +1,26 @@
+@use 'sass:color';
+@use './palette' as *;
+
+// ----- Light (default) -----
+$color-bg: $palette-100;
+$color-surface: $palette-200;
+$color-surface-raised: color.mix($palette-100, $palette-200, 45%);
+$color-border: color.mix($palette-900, $palette-200, 16%);
+$color-text: $palette-900;
+$color-text-muted: color.mix($palette-900, $palette-300, 50%);
+$color-accent: $palette-300;
+$color-accent-strong: color.adjust($palette-900, $lightness: -4%);
+$color-focus-ring: $palette-300;
+$color-shadow-tint: $palette-900;
+
+// ----- Dark (same swatches, reassigned) -----
+$color-bg-dark: $palette-900;
+$color-surface-dark: color.mix($palette-900, $palette-300, 78%);
+$color-surface-raised-dark: color.mix($palette-900, $palette-300, 62%);
+$color-border-dark: color.mix($palette-100, $palette-900, 24%);
+$color-text-dark: $palette-100;
+$color-text-muted-dark: color.mix($palette-100, $palette-300, 38%);
+$color-accent-dark: $palette-300;
+$color-accent-strong-dark: $palette-200;
+$color-focus-ring-dark: $palette-200;
+$color-shadow-tint-dark: $palette-900;

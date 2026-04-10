@@ -1,3 +1,81 @@
+@use 'sass:color';
+@use './abstracts' as *;
+
+@mixin verge-vars-light {
+    --verge-bg: #{$color-bg};
+    --verge-surface: #{$color-surface};
+    --verge-surface-raised: #{$color-surface-raised};
+    --verge-border: #{$color-border};
+    --verge-text: #{$color-text};
+    --verge-text-muted: #{$color-text-muted};
+    --verge-accent: #{$color-accent};
+    --verge-accent-strong: #{$color-accent-strong};
+    --verge-focus-ring: #{$color-focus-ring};
+    --verge-shadow-sm: #{$shadow-sm};
+    --verge-shadow-md: #{$shadow-md};
+    --verge-shadow-lg: #{$shadow-lg};
+
+    --verge-glass-bg: #{$glass-bg-light};
+    --verge-glass-blur: 1.125rem;
+    --verge-glass-blur-strong: 1.875rem;
+    --verge-glass-saturate: 1.22;
+    --verge-glass-border: #{$glass-border-edge-light};
+    --verge-glass-elevation: #{$shadow-glass-light};
+    --verge-glass-inset: inset 0 1px 0 0 #{color.change(#fff, $alpha: 0.58)};
+    --verge-glass-text-shadow: 0 1px 0 #{color.change(#fff, $alpha: 0.45)};
+
+    --verge-bg-gradient:
+        radial-gradient(
+            ellipse 100% 85% at 92% 8%,
+            #{color.mix($palette-300, $palette-100, 38%)} 0%,
+            transparent 52%
+        ),
+        radial-gradient(ellipse 80% 55% at 8% 88%, #{$palette-200} 0%, transparent 50%),
+        linear-gradient(
+            165deg,
+            #{$palette-100} 0%,
+            #{color.mix($palette-200, $palette-100, 35%)} 48%,
+            #{color.mix($palette-100, $palette-300, 92%)} 100%
+        );
+}
+
+@mixin verge-vars-dark {
+    --verge-bg: #{$color-bg-dark};
+    --verge-surface: #{$color-surface-dark};
+    --verge-surface-raised: #{$color-surface-raised-dark};
+    --verge-border: #{$color-border-dark};
+    --verge-text: #{$color-text-dark};
+    --verge-text-muted: #{$color-text-muted-dark};
+    --verge-accent: #{$color-accent-dark};
+    --verge-accent-strong: #{$color-accent-strong-dark};
+    --verge-focus-ring: #{$color-focus-ring-dark};
+    --verge-shadow-sm: #{$shadow-sm-dark};
+    --verge-shadow-md: #{$shadow-md-dark};
+    --verge-shadow-lg: #{$shadow-lg-dark};
+
+    --verge-glass-bg: #{$glass-bg-dark};
+    --verge-glass-blur: 1rem;
+    --verge-glass-blur-strong: 1.5rem;
+    --verge-glass-saturate: 1.08;
+    --verge-glass-border: #{$glass-border-edge-dark};
+    --verge-glass-elevation: #{$shadow-glass-dark};
+    --verge-glass-inset: inset 0 1px 0 0 #{color.change($palette-100, $alpha: 0.14)};
+    --verge-glass-text-shadow: 0 1px 3px #{color.change($palette-900, $alpha: 0.45)};
+
+    --verge-bg-gradient:
+        radial-gradient(
+            ellipse 90% 70% at 85% 12%,
+            #{color.mix($palette-300, $palette-900, 22%)} 0%,
+            transparent 55%
+        ),
+        linear-gradient(
+            168deg,
+            #{$palette-900} 0%,
+            #{color.mix($palette-900, $palette-300, 82%)} 55%,
+            #{$palette-900} 100%
+        );
+}
+
 *,
 *::before,
 *::after {
@@ -5,27 +83,108 @@
 }
 
 :root {
-    font-family: system-ui, sans-serif;
-    line-height: 1.5;
-    color-scheme: light dark;
-    color: CanvasText;
-    background-color: Canvas;
+    @include verge-vars-light;
+
+    // Structural tokens (shared across light / dark)
+    --verge-border-width-0: #{$border-width-0};
+    --verge-border-width-hairline: #{$border-width-hairline};
+    --verge-border-width-2: #{$border-width-2};
+    --verge-border-width-3: #{$border-width-3};
+
+    --verge-radius-none: #{$radius-none};
+    --verge-radius-xs: #{$radius-xs};
+    --verge-radius-sm: #{$radius-sm};
+    --verge-radius-md: #{$radius-md};
+    --verge-radius-lg: #{$radius-lg};
+    --verge-radius-xl: #{$radius-xl};
+    --verge-radius-2xl: #{$radius-2xl};
+    --verge-radius-3xl: #{$radius-3xl};
+    --verge-radius-4xl: #{$radius-4xl};
+    --verge-radius-full: #{$radius-full};
+
+    --verge-opacity-0: #{$opacity-0};
+    --verge-opacity-disabled: #{$opacity-disabled};
+    --verge-opacity-muted: #{$opacity-muted};
+    --verge-opacity-secondary: #{$opacity-secondary};
+    --verge-opacity-strong: #{$opacity-strong};
+    --verge-opacity-full: #{$opacity-full};
+
+    --verge-duration-instant: #{$duration-instant};
+    --verge-duration-fast: #{$duration-fast};
+    --verge-duration-normal: #{$duration-normal};
+    --verge-duration-slow: #{$duration-slow};
+    --verge-duration-slower: #{$duration-slower};
+
+    --verge-ease-default: #{$ease-default};
+    --verge-ease-in: #{$ease-in};
+    --verge-ease-out: #{$ease-out};
+    --verge-ease-in-out: #{$ease-in-out};
+    --verge-ease-emphasized: #{$ease-emphasized};
+
+    --verge-z-base: #{$z-base};
+    --verge-z-raised: #{$z-raised};
+    --verge-z-dropdown: #{$z-dropdown};
+    --verge-z-sticky: #{$z-sticky};
+    --verge-z-fixed: #{$z-fixed};
+    --verge-z-overlay: #{$z-overlay};
+    --verge-z-modal: #{$z-modal};
+    --verge-z-popover: #{$z-popover};
+    --verge-z-tooltip: #{$z-tooltip};
+    --verge-z-max: #{$z-max};
+
+    --verge-font-sans: #{$font-family-sans};
+    --verge-font-weight-ui: #{$font-weight-ui};
+
+    color-scheme: light;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+        @include verge-vars-dark;
+        color-scheme: dark;
+    }
+}
+
+:root[data-theme='dark'] {
+    @include verge-vars-dark;
+    color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+    @include verge-vars-light;
+    color-scheme: light;
+}
+
 #root {
     min-height: 100svh;
+    color: var(--verge-text);
+    background: transparent;
 }
 
 body {
     margin: 0;
+    font-family: var(--verge-font-sans);
+    font-size: $text-base;
+    font-weight: var(--verge-font-weight-ui);
+    line-height: $line-height-normal;
+    color: var(--verge-text);
+    background-color: var(--verge-bg);
+    background-image: var(--verge-bg-gradient);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 h1 {
     margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: $text-2xl;
+    font-weight: var(--verge-font-weight-ui);
+    line-height: $line-height-tight;
+    color: var(--verge-text);
+    text-shadow: var(--verge-glass-text-shadow);
+    letter-spacing: -0.02em;
 }

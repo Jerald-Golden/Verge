@@ -1,0 +1,27 @@
+// Sono (Google Fonts) — default UI weight ExtraLight (200)
+$font-family-sans: 'Sono', ui-monospace, 'Segoe UI Mono', 'Cascadia Mono', monospace;
+$font-family-mono: $font-family-sans;
+
+$font-weight-extralight: 200;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+/// Primary copy weight (ExtraLight)
+$font-weight-ui: $font-weight-extralight;
+
+$line-height-tight: 1.2;
+$line-height-snug: 1.35;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.65;
+
+$text-xs: 0.75rem;
+$text-sm: 0.875rem;
+$text-base: 1rem;
+$text-lg: 1.125rem;
+$text-xl: 1.25rem;
+$text-2xl: 1.5rem;
+$text-3xl: 1.875rem;
+$text-4xl: 2.25rem;

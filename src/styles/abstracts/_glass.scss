@@ -1,0 +1,37 @@
+@use 'sass:color';
+@use './palette' as *;
+@use './spacing' as *;
+@use './borders' as *;
+@use './radii' as *;
+
+// Frosted panels use the global radius scale
+$glass-radius: $radius-2xl;
+$glass-radius-lg: $radius-3xl;
+
+// Light frosted fills (compiled into --verge-glass-* on :root)
+$glass-bg-light: color.change($palette-100, $alpha: 0.5);
+$glass-border-edge-light: color.change($palette-300, $alpha: 0.28);
+
+// Dark mode: subtle frost on deep base
+$glass-bg-dark: color.change($palette-100, $alpha: 0.1);
+$glass-border-edge-dark: color.change($palette-300, $alpha: 0.35);
+
+/// Frosted glass surface (uses theme CSS variables).
+@mixin glass-panel($padding: $space-5) {
+    padding: $padding;
+    background: var(--verge-glass-bg);
+    backdrop-filter: blur(var(--verge-glass-blur)) saturate(var(--verge-glass-saturate));
+    -webkit-backdrop-filter: blur(var(--verge-glass-blur)) saturate(var(--verge-glass-saturate));
+    border: $border-width-hairline $border-style-default var(--verge-glass-border);
+    border-radius: $glass-radius;
+    box-shadow: var(--verge-glass-elevation), var(--verge-glass-inset);
+}
+
+/// Stronger blur / larger radius for hero or modals.
+@mixin glass-panel-strong($padding: $space-6) {
+    @include glass-panel($padding);
+    border-radius: $glass-radius-lg;
+    backdrop-filter: blur(var(--verge-glass-blur-strong)) saturate(var(--verge-glass-saturate));
+    -webkit-backdrop-filter: blur(var(--verge-glass-blur-strong))
+        saturate(var(--verge-glass-saturate));
+}

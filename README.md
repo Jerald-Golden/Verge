@@ -31,7 +31,7 @@ Then open the URL Vite prints (usually `http://localhost:5173`).
 ```
 src/
   components/App/   # Root React component
-  styles/           # globals.scss, app.scss
+  styles/           # globals.scss, app.scss, abstracts/ (palette, spacing, borders, radii, motion, z-index, glass, mixins)
   main.tsx          # Entry
 public/             # Favicons, icons, site.webmanifest
 ```

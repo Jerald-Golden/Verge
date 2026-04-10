@@ -1,0 +1,24 @@
+// Corner radius scale (aligns with glass panels at 2xl / 3xl)
+$radius-none: 0;
+$radius-xs: 0.25rem;
+$radius-sm: 0.375rem;
+$radius-md: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-2xl: 1.25rem;
+$radius-3xl: 1.75rem;
+$radius-4xl: 2rem;
+$radius-full: 9999px;
+
+$radii: (
+    none: $radius-none,
+    xs: $radius-xs,
+    sm: $radius-sm,
+    md: $radius-md,
+    lg: $radius-lg,
+    xl: $radius-xl,
+    2xl: $radius-2xl,
+    3xl: $radius-3xl,
+    4xl: $radius-4xl,
+    full: $radius-full,
+);

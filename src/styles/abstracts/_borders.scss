@@ -1,0 +1,15 @@
+// Border width scale (hairline = 1px; use for UI dividers and glass edges)
+$border-width-0: 0;
+$border-width-hairline: 1px;
+$border-width-2: 2px;
+$border-width-3: 3px;
+
+$border-style-default: solid;
+$border-style-dashed: dashed;
+
+$border-widths: (
+    0: $border-width-0,
+    hairline: $border-width-hairline,
+    2: $border-width-2,
+    3: $border-width-3,
+);

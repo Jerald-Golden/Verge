@@ -1,0 +1,24 @@
+// Stacking steps (keep HUD / modals predictable as the game grows)
+$z-base: 0;
+$z-raised: 1;
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-fixed: 300;
+$z-overlay: 400;
+$z-modal: 500;
+$z-popover: 600;
+$z-tooltip: 700;
+$z-max: 9999;
+
+$z-layers: (
+    base: $z-base,
+    raised: $z-raised,
+    dropdown: $z-dropdown,
+    sticky: $z-sticky,
+    fixed: $z-fixed,
+    overlay: $z-overlay,
+    modal: $z-modal,
+    popover: $z-popover,
+    tooltip: $z-tooltip,
+    max: $z-max,
+);
