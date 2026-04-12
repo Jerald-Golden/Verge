@@ -8,7 +8,7 @@ export function LandingLayout() {
 
     return (
         <div className="landing" data-map-seed={mapId}>
-            <Game />
+            <Game mapSeed={mapId ?? 'default'} />
             <LandingPage />
         </div>
     )
