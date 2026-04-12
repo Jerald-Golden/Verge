@@ -191,7 +191,7 @@ function StreamingTerrain({
 
     return (
         <>
-            {tiles.map(({ ix, iz }) => (
+            {tiles.map(({ ix, iz }, loadIndex) => (
                 <TerrainChunk
                     key={`${ix},${iz}`}
                     ix={ix}
@@ -202,6 +202,7 @@ function StreamingTerrain({
                     mapSeed={mapSeed}
                     material={terrainMaterial}
                     geometryCacheMaxEntries={geometryCacheMaxEntries}
+                    meshJobPriority={loadIndex}
                 />
             ))}
         </>

@@ -22,6 +22,8 @@ export type TerrainChunkProps = {
     mapSeed: string
     material: MeshStandardMaterial
     geometryCacheMaxEntries: number
+    /** Lower = mesh worker runs sooner when the pool is backed up. */
+    meshJobPriority: number
 }
 
 function disposeOrphanGeometry(
@@ -45,10 +47,13 @@ export function TerrainChunk({
     mapSeed,
     material,
     geometryCacheMaxEntries,
+    meshJobPriority,
 }: Readonly<TerrainChunkProps>) {
     const [geometry, setGeometry] = useState<PlaneGeometry | null>(null)
     const geometryRef = useRef<PlaneGeometry | null>(null)
     const meshRef = useRef<Mesh | null>(null)
+    const meshJobPriorityRef = useRef(meshJobPriority)
+    meshJobPriorityRef.current = meshJobPriority
 
     useEffect(() => {
         const seg = Math.max(2, Math.min(320, Math.round(segments)))
@@ -67,7 +72,15 @@ export function TerrainChunk({
                 setGeometry(null)
             })
             terrainChunkWorkerPool
-                .request({ ix, iz, chunkSize, segments, shape, seedHash })
+                .request({
+                    priority: meshJobPriorityRef.current,
+                    ix,
+                    iz,
+                    chunkSize,
+                    segments,
+                    shape,
+                    seedHash,
+                })
                 .then((positions) => {
                     if (cancelled) {
                         disposeOrphanGeometry(chunkSize, seg, positions)
@@ -77,9 +90,7 @@ export function TerrainChunk({
                     geo.setAttribute('position', new Float32BufferAttribute(positions, 3))
                     geo.computeVertexNormals()
                     geometryRef.current = geo
-                    startTransition(() => {
-                        setGeometry(geo)
-                    })
+                    setGeometry(geo)
                 })
                 .catch(() => {
                     /* Unmount or worker failure */

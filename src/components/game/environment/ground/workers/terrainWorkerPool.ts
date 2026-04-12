@@ -12,6 +12,18 @@ type Pending = {
 
 type QueuedJob = TerrainChunkJobPayload & { id: number }
 
+function enqueueByPriority(queue: QueuedJob[], job: QueuedJob) {
+    let i = 0
+    while (
+        i < queue.length &&
+        (queue[i].priority < job.priority ||
+            (queue[i].priority === job.priority && queue[i].id < job.id))
+    ) {
+        i++
+    }
+    queue.splice(i, 0, job)
+}
+
 function createWorker(): Worker {
     return new Worker(new URL('./terrainChunk.worker.ts', import.meta.url).href, {
         type: 'module',
@@ -52,7 +64,7 @@ export class TerrainChunkWorkerPool {
             if (worker) {
                 this.dispatch(worker, job)
             } else {
-                this.queue.push(job)
+                enqueueByPriority(this.queue, job)
             }
         })
     }

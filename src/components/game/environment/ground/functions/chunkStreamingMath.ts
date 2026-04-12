@@ -26,7 +26,7 @@ export function computeViewDirectedTiles(
     const rSide = r
 
     const rMax = r + rFwd + 2
-    const out: ChunkTile[] = []
+    const candidates: { ix: number; iz: number; along: number; distSq: number }[] = []
     const seen = new Set<string>()
 
     for (let di = -rMax; di <= rMax; di++) {
@@ -50,11 +50,18 @@ export function computeViewDirectedTiles(
             }
 
             seen.add(key)
-            out.push({ ix, iz })
+            candidates.push({ ix, iz, along, distSq: vx * vx + vz * vz })
         }
     }
 
-    return out
+    candidates.sort((a, b) => {
+        if (b.along !== a.along) {
+            return b.along - a.along
+        }
+        return a.distSq - b.distSq
+    })
+
+    return candidates.map(({ ix, iz }) => ({ ix, iz }))
 }
 
 export function tileSetSignature(tiles: ChunkTile[]): string {
