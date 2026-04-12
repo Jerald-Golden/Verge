@@ -1,9 +1,12 @@
+import { useParams } from 'react-router-dom'
 import { VergeButton } from '../../buttons'
 import { Game } from '../../game/Game.tsx'
 
 export function LandingPage() {
+    const { mapId } = useParams<{ mapId: string }>()
+
     return (
-        <div className="landing">
+        <div className="landing" data-map-seed={mapId}>
             <Game />
             <div className="landing__chrome">
                 <header className="landing__header">

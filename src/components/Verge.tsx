@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { useLoadingContext } from '../context/LoadingContext.tsx'
 import { LandingPage } from './pages/LandingPage/LandingPage.tsx'
+import { MapSeedRedirect } from './routing/MapSeedRedirect.tsx'
 
 export function Verge() {
     const { isLoading } = useLoadingContext()
@@ -8,7 +9,8 @@ export function Verge() {
     return (
         <main className="app" aria-busy={isLoading}>
             <Routes>
-                <Route path="/" element={<LandingPage />} />
+                <Route path="/" element={<MapSeedRedirect />} />
+                <Route path="/:mapId" element={<LandingPage />} />
             </Routes>
         </main>
     )
