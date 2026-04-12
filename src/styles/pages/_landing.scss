@@ -24,6 +24,8 @@
         flex-direction: column;
         overflow: hidden;
         text-align: center;
+        opacity: 1;
+        transition: opacity var(--verge-duration-exit) var(--verge-ease-out);
         @include glass-panel-strong($space-5);
         border-radius: $radius-none;
 
@@ -31,6 +33,12 @@
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
             background: var(--verge-surface-raised);
+            transition-duration: var(--verge-duration-instant);
+        }
+
+        &--exiting {
+            opacity: 0;
+            pointer-events: none;
         }
     }
 
