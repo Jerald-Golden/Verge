@@ -132,7 +132,7 @@
     z-index: 0;
     border-radius: inherit;
     pointer-events: none;
-    background-color: color-mix(in srgb, var(--verge-accent) 42%, var(--verge-surface) 58%);
+    background-color: var(--verge-bg);
     -webkit-clip-path: circle(
         var(--verge-btn-fill-r) at var(--verge-btn-fill-ax) var(--verge-btn-fill-ay)
     );
