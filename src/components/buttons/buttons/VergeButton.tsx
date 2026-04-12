@@ -2,7 +2,10 @@ import { useState, type FocusEvent, type MouseEvent, type ReactNode } from 'reac
 
 /** Radius large enough to cover the whole button from any origin inside the rect (avoids snap when origin moves). */
 function setFillRadiusCover(el: HTMLButtonElement, rect: DOMRectReadOnly) {
-    el.style.setProperty('--verge-btn-fill-r-max', `${Math.hypot(rect.width, rect.height) * 1.02}px`)
+    el.style.setProperty(
+        '--verge-btn-fill-r-max',
+        `${Math.hypot(rect.width, rect.height) * 1.02}px`,
+    )
 }
 
 function setFillOriginFromPointer(el: HTMLButtonElement, clientX: number, clientY: number) {
@@ -53,7 +56,11 @@ export function VergeButton({ children, onClick, className }: Readonly<VergeButt
         setHovered(false)
     }
 
-    const rootClass = ['verge-button verge-button--glass', hovered ? 'verge-button--hovered' : '', className ?? '']
+    const rootClass = [
+        'verge-button verge-button--glass',
+        hovered ? 'verge-button--hovered' : '',
+        className ?? '',
+    ]
         .filter(Boolean)
         .join(' ')
 

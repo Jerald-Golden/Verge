@@ -177,6 +177,9 @@ body {
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
 h1 {

@@ -58,7 +58,8 @@
         border-radius: inherit;
         background-image:
             radial-gradient(
-                circle var(--verge-btn-dot-size) at var(--verge-btn-corner-inset) var(--verge-btn-corner-inset),
+                circle var(--verge-btn-dot-size) at var(--verge-btn-corner-inset)
+                    var(--verge-btn-corner-inset),
                 currentColor 98%,
                 transparent 100%
             ),
@@ -132,7 +133,9 @@
     border-radius: inherit;
     pointer-events: none;
     background-color: color-mix(in srgb, var(--verge-accent) 42%, var(--verge-surface) 58%);
-    -webkit-clip-path: circle(var(--verge-btn-fill-r) at var(--verge-btn-fill-ax) var(--verge-btn-fill-ay));
+    -webkit-clip-path: circle(
+        var(--verge-btn-fill-r) at var(--verge-btn-fill-ax) var(--verge-btn-fill-ay)
+    );
     clip-path: circle(var(--verge-btn-fill-r) at var(--verge-btn-fill-ax) var(--verge-btn-fill-ay));
     will-change: clip-path;
 }

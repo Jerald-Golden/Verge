@@ -9,6 +9,14 @@
     padding: $space-5;
     text-align: center;
 
+    > .game {
+        position: absolute;
+        inset: 0;
+        z-index: var(--verge-z-base);
+        overflow: hidden;
+        pointer-events: none;
+    }
+
     &__header {
         position: absolute;
         top: 0;
@@ -33,6 +41,8 @@
     }
 
     &__main {
+        position: relative;
+        z-index: var(--verge-z-raised);
         display: flex;
         flex: 1;
         flex-direction: column;
