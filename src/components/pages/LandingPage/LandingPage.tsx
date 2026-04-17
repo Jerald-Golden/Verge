@@ -31,7 +31,7 @@ export function LandingPage() {
             onTransitionEnd={onChromeTransitionEnd}
         >
             <header className="landing__header">
-                <h1 className="landing__title">VERGE: Endless Road</h1>
+                <h1 className="landing__title">VERGE: Endless Plains</h1>
             </header>
             <div className="landing__main">
                 <div className="landing__actions" role="group" aria-label="Main menu">

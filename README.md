@@ -1,4 +1,4 @@
-# Verge: Endless Road
+# Verge: Endless Plains
 
 Web app scaffold: **React 19**, **TypeScript**, **Vite**, **React Router**, and **SCSS**. **ESLint** and **Prettier** are configured.
 
