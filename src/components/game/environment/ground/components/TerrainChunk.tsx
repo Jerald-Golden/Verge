@@ -16,6 +16,8 @@ const PLACEHOLDER_GEOMETRY = new BufferGeometry()
 export type TerrainChunkProps = {
     ix: number
     iz: number
+    streamCenterIx: number
+    streamCenterIz: number
     chunkSize: number
     segments: number
     shape: TerrainShapeParams
@@ -41,6 +43,8 @@ function disposeOrphanGeometry(
 export function TerrainChunk({
     ix,
     iz,
+    streamCenterIx,
+    streamCenterIz,
     chunkSize,
     segments,
     shape,
@@ -53,7 +57,10 @@ export function TerrainChunk({
     const geometryRef = useRef<PlaneGeometry | null>(null)
     const meshRef = useRef<Mesh | null>(null)
     const meshJobPriorityRef = useRef(meshJobPriority)
+    const streamCenterRef = useRef({ ix: streamCenterIx, iz: streamCenterIz })
     meshJobPriorityRef.current = meshJobPriority
+    streamCenterRef.current.ix = streamCenterIx
+    streamCenterRef.current.iz = streamCenterIz
 
     useEffect(() => {
         const seg = Math.max(2, Math.min(320, Math.round(segments)))
@@ -108,7 +115,15 @@ export function TerrainChunk({
                 meshAtCleanup.geometry = PLACEHOLDER_GEOMETRY
             }
             if (g) {
-                terrainGeometryCacheRelease(effectKey, g, geometryCacheMaxEntries)
+                terrainGeometryCacheRelease(
+                    effectKey,
+                    g,
+                    geometryCacheMaxEntries,
+                    ix,
+                    iz,
+                    streamCenterRef.current.ix,
+                    streamCenterRef.current.iz,
+                )
             }
         }
     }, [ix, iz, chunkSize, segments, shape, mapSeed, geometryCacheMaxEntries])

@@ -46,6 +46,7 @@ export function buildTerrainChunkKey(
  * Oldest full cache keys are at the front.
  */
 const coldKeyOrder: string[] = []
+const coldKeyCoords = new Map<string, { ix: number; iz: number }>()
 
 function removeKeyFromOrder(fullKey: string) {
     const i = coldKeyOrder.indexOf(fullKey)
@@ -63,6 +64,26 @@ function ensureCacheEnabled() {
     Cache.enabled = true
 }
 
+function getFarthestCacheIndex(centerIx: number, centerIz: number): number {
+    let farthestIndex = -1
+    let farthestDistSq = -1
+    for (let i = 0; i < coldKeyOrder.length; i += 1) {
+        const candidateKey = coldKeyOrder[i]
+        const coords = coldKeyCoords.get(candidateKey)
+        if (!coords) {
+            continue
+        }
+        const dx = coords.ix - centerIx
+        const dz = coords.iz - centerIz
+        const distSq = dx * dx + dz * dz
+        if (distSq > farthestDistSq) {
+            farthestDistSq = distSq
+            farthestIndex = i
+        }
+    }
+    return Math.max(farthestIndex, 0)
+}
+
 /**
  * Remove and return cold-stored geometry from `THREE.Cache`, or undefined.
  */
@@ -75,6 +96,7 @@ export function terrainGeometryCacheTake(logicalKey: string): PlaneGeometry | un
     }
     Cache.remove(fullKey)
     removeKeyFromOrder(fullKey)
+    coldKeyCoords.delete(fullKey)
     return g
 }
 
@@ -85,6 +107,10 @@ export function terrainGeometryCacheRelease(
     logicalKey: string,
     geometry: PlaneGeometry,
     maxEntries: number,
+    chunkIx: number,
+    chunkIz: number,
+    centerIx: number,
+    centerIz: number,
 ) {
     ensureCacheEnabled()
     const fullKey = cacheKeyForTerrain(logicalKey)
@@ -102,14 +128,17 @@ export function terrainGeometryCacheRelease(
     // `Cache.files` is shared with loaders; values are untyped at runtime (we store `PlaneGeometry` only under `CACHE_PREFIX`).
     Cache.add(fullKey, geometry as never)
     touchKeyOrder(fullKey)
+    coldKeyCoords.set(fullKey, { ix: chunkIx, iz: chunkIz })
 
     while (coldKeyOrder.length > maxEntries) {
-        const evictFullKey = coldKeyOrder.shift()
+        const farthestIndex = getFarthestCacheIndex(centerIx, centerIz)
+        const [evictFullKey] = coldKeyOrder.splice(farthestIndex, 1)
         if (evictFullKey === undefined) {
             break
         }
         const evicted = Cache.get(evictFullKey) as PlaneGeometry | undefined
         Cache.remove(evictFullKey)
+        coldKeyCoords.delete(evictFullKey)
         evicted?.dispose()
     }
 }
@@ -126,6 +155,8 @@ export function terrainGeometryCacheClear() {
         if (g && typeof (g as PlaneGeometry).dispose === 'function') {
             ;(g as PlaneGeometry).dispose()
         }
+        coldKeyCoords.delete(fullKey)
     }
     coldKeyOrder.length = 0
+    coldKeyCoords.clear()
 }

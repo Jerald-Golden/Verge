@@ -196,6 +196,8 @@ function StreamingTerrain({
                     key={`${ix},${iz}`}
                     ix={ix}
                     iz={iz}
+                    streamCenterIx={lastStream.current.ix}
+                    streamCenterIz={lastStream.current.iz}
                     chunkSize={chunkSize}
                     segments={segments}
                     shape={shape}
@@ -221,7 +223,7 @@ export function Ground({ mapSeed }: Readonly<GroundProps>) {
         persistence: { value: 0.05, min: 0.05, max: 0.99, step: 0.01 },
         lacunarity: { value: 2.9, min: 1.05, max: 4.5, step: 0.05 },
         wireframe: false,
-    })
+    }, { collapsed: true })
 
     return <StreamingTerrain mapSeed={mapSeed} {...terrain} />
 }
