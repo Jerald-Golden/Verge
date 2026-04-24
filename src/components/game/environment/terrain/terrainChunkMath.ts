@@ -1,7 +1,7 @@
 import { createNoise2D } from 'simplex-noise'
-import { mulberry32 } from '../../../../../utils/seededRandom.ts'
-import type { TerrainShapeParams } from '../utils/terrainNoise.ts'
-import { sampleTerrainHeight } from '../utils/terrainNoise.ts'
+import { mulberry32 } from '../../../../utils/seededRandom.ts'
+import type { TerrainShapeParams } from './terrainNoise.ts'
+import { sampleTerrainHeight } from './terrainNoise.ts'
 
 /**
  * Vertex layout matches `THREE.PlaneGeometry(width, height, seg, seg)`:

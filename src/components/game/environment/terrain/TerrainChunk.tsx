@@ -1,14 +1,14 @@
 import { startTransition, useEffect, useRef, useState } from 'react'
 import { BufferGeometry, Float32BufferAttribute, PlaneGeometry } from 'three'
 import type { Mesh, MeshStandardMaterial } from 'three'
-import { hashString } from '../../../../../utils/seededRandom.ts'
+import { hashString } from '../../../../utils/seededRandom.ts'
 import {
     buildTerrainChunkKey,
     terrainGeometryCacheRelease,
     terrainGeometryCacheTake,
-} from '../functions/terrainGeometryCache.ts'
-import { terrainChunkWorkerPool } from '../workers/terrainWorkerPool.ts'
-import type { TerrainShapeParams } from '../utils/terrainNoise.ts'
+} from './terrainGeometryCache.ts'
+import { terrainChunkWorkerPool } from './terrainWorkerPool.ts'
+import type { TerrainShapeParams } from './terrainNoise.ts'
 
 /** Detach released terrain geometry from the mesh before LRU cache (avoids dispose-while-attached). */
 const PLACEHOLDER_GEOMETRY = new BufferGeometry()
@@ -28,11 +28,7 @@ export type TerrainChunkProps = {
     meshJobPriority: number
 }
 
-function disposeOrphanGeometry(
-    chunkSize: number,
-    seg: number,
-    positions: Float32Array,
-) {
+function disposeOrphanGeometry(chunkSize: number, seg: number, positions: Float32Array) {
     const geo = new PlaneGeometry(chunkSize, chunkSize, seg, seg)
     geo.setAttribute('position', new Float32BufferAttribute(positions, 3))
     geo.computeVertexNormals()

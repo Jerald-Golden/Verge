@@ -1,7 +1,10 @@
 /// <reference lib="webworker" />
 
-import { computeViewDirectedTiles, tileSetSignature } from '../functions/chunkStreamingMath.ts'
-import type { ChunkStreamingWorkerRequest, ChunkStreamingWorkerResponse } from './chunkStreamingProtocol.ts'
+import { computeViewDirectedTiles, tileSetSignature } from './chunkStreamingMath.ts'
+import type {
+    ChunkStreamingWorkerRequest,
+    ChunkStreamingWorkerResponse,
+} from './chunkStreamingProtocol.ts'
 
 const workerScope = globalThis as unknown as DedicatedWorkerGlobalScope
 

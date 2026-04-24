@@ -2,7 +2,7 @@ import { Canvas } from '@react-three/fiber'
 import { Leva } from 'leva'
 import { Suspense } from 'react'
 import { Controls } from './controls/Controls.tsx'
-import { Ground } from './environment/ground/Ground.tsx'
+import { Environment } from './environment/Environment.tsx'
 import { Entities } from './entities/Entities.tsx'
 import { Stats } from '@react-three/drei'
 
@@ -12,7 +12,6 @@ export type GameProps = {
 
 /** R3F host. World scale: 1 Three.js unit = 1 meter (`src/game/worldUnits.ts`). */
 export function Game({ mapSeed = 'default' }: Readonly<GameProps>) {
-
     return (
         <>
             <div className="game" aria-hidden>
@@ -35,7 +34,7 @@ export function Game({ mapSeed = 'default' }: Readonly<GameProps>) {
                         <Controls />
                         <ambientLight intensity={0.65} />
                         <directionalLight position={[280, 420, 260]} intensity={1.02} />
-                        <Ground mapSeed={mapSeed} />
+                        <Environment mapSeed={mapSeed} />
                         <Entities />
                         <Stats />
                     </Canvas>

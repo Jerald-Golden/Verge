@@ -50,7 +50,8 @@ export class TerrainChunkWorkerPool {
     }
 
     private attachHandlers(worker: Worker): Worker {
-        worker.onmessage = (ev: MessageEvent<TerrainChunkWorkerResponse>) => this.onMessage(worker, ev)
+        worker.onmessage = (ev: MessageEvent<TerrainChunkWorkerResponse>) =>
+            this.onMessage(worker, ev)
         worker.onerror = (ev) => this.onError(worker, ev)
         return worker
     }

@@ -1,14 +1,15 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { MeshStandardMaterial, Vector3 } from 'three'
-import { TerrainChunk } from './components/TerrainChunk.tsx'
-import { computeViewDirectedTiles } from './functions/chunkStreamingMath.ts'
-import { terrainGeometryCacheClear } from './functions/terrainGeometryCache.ts'
-import type { TerrainShapeParams } from './utils/terrainNoise.ts'
-import { createChunkStreamingWorker } from './workers/chunkStreamingWorkerBridge.ts'
+import { TerrainChunk } from './terrain/TerrainChunk.tsx'
+import { type ChunkTile, computeViewDirectedTiles } from './terrain/chunkStreamingMath.ts'
+import { terrainGeometryCacheClear } from './terrain/terrainGeometryCache.ts'
+import type { TerrainShapeParams } from './terrain/terrainNoise.ts'
+import { createChunkStreamingWorker } from './terrain/chunkStreamingWorkerBridge.ts'
+import { VegetationLayer } from './vegetation/VegetationLayer.tsx'
 import { useControls } from 'leva'
 
-export type GroundTerrainProps = {
+export type EnvironmentTerrainProps = {
     chunkSize: number
     gridRadius: number
     segments: number
@@ -21,7 +22,7 @@ export type GroundTerrainProps = {
     wireframe: boolean
 }
 
-export type GroundProps = {
+export type EnvironmentProps = {
     mapSeed: string
 }
 
@@ -43,7 +44,7 @@ function StreamingTerrain({
     persistence,
     lacunarity,
     wireframe,
-}: Readonly<{ mapSeed: string } & GroundTerrainProps>) {
+}: Readonly<{ mapSeed: string } & EnvironmentTerrainProps>) {
     const camera = useThree((s) => s.camera)
 
     const shape: TerrainShapeParams = useMemo(
@@ -59,7 +60,10 @@ function StreamingTerrain({
     )
 
     const r = Math.max(1, Math.min(12, Math.round(gridRadius)))
-    const [tiles, setTiles] = useState(() => computeViewDirectedTiles(0, 0, chunkSize, r, 0, 1))
+    const [tiles, setTiles] = useState<ChunkTile[]>(() =>
+        computeViewDirectedTiles(0, 0, chunkSize, r, 0, 1),
+    )
+    const [streamCenter, setStreamCenter] = useState({ ix: 0, iz: 0 })
     const lastStream = useRef({
         ix: 0,
         iz: 0,
@@ -95,6 +99,7 @@ function StreamingTerrain({
         lastStream.current.pz = pz
         lastStream.current.ix = Math.floor(px / chunkSize)
         lastStream.current.iz = Math.floor(pz / chunkSize)
+        setStreamCenter({ ix: lastStream.current.ix, iz: lastStream.current.iz })
 
         const id = ++lastRequestIdRef.current
         api.post({
@@ -115,7 +120,17 @@ function StreamingTerrain({
 
     useEffect(() => {
         terrainGeometryCacheClear()
-    }, [mapSeed, chunkSize, segments, macroWavelengthM, detail, octaves, persistence, lacunarity, amplitude])
+    }, [
+        mapSeed,
+        chunkSize,
+        segments,
+        macroWavelengthM,
+        detail,
+        octaves,
+        persistence,
+        lacunarity,
+        amplitude,
+    ])
 
     const terrainMaterial = useMemo(
         () =>
@@ -181,6 +196,7 @@ function StreamingTerrain({
 
         lastStream.current.ix = ix
         lastStream.current.iz = iz
+        setStreamCenter({ ix, iz })
         lastStream.current.fx = fx
         lastStream.current.fz = fz
         lastStream.current.px = px
@@ -196,8 +212,8 @@ function StreamingTerrain({
                     key={`${ix},${iz}`}
                     ix={ix}
                     iz={iz}
-                    streamCenterIx={lastStream.current.ix}
-                    streamCenterIz={lastStream.current.iz}
+                    streamCenterIx={streamCenter.ix}
+                    streamCenterIz={streamCenter.iz}
                     chunkSize={chunkSize}
                     segments={segments}
                     shape={shape}
@@ -207,23 +223,28 @@ function StreamingTerrain({
                     meshJobPriority={loadIndex}
                 />
             ))}
+            <VegetationLayer mapSeed={mapSeed} chunkSize={chunkSize} shape={shape} tiles={tiles} />
         </>
     )
 }
 
-export function Ground({ mapSeed }: Readonly<GroundProps>) {
-    const terrain = useControls('Terrain', {
-        chunkSize: { value: 750, min: 48, max: 1200, step: 4 },
-        gridRadius: { value: 10, min: 1, max: 12, step: 1 },
-        segments: { value: 128, min: 8, max: 320, step: 1 },
-        amplitude: { value: 120, min: 0, max: 200, step: 0.5 },
-        macroWavelengthM: { value: 3704, min: 120, max: 4000, step: 10 },
-        detail: { value: 4, min: 0.1, max: 4, step: 0.05 },
-        octaves: { value: 7, min: 1, max: 8, step: 1 },
-        persistence: { value: 0.05, min: 0.05, max: 0.99, step: 0.01 },
-        lacunarity: { value: 2.9, min: 1.05, max: 4.5, step: 0.05 },
-        wireframe: false,
-    }, { collapsed: true })
+export function Environment({ mapSeed }: Readonly<EnvironmentProps>) {
+    const terrain = useControls(
+        'Terrain',
+        {
+            chunkSize: { value: 750, min: 48, max: 1200, step: 4 },
+            gridRadius: { value: 10, min: 1, max: 12, step: 1 },
+            segments: { value: 128, min: 8, max: 320, step: 1 },
+            amplitude: { value: 120, min: 0, max: 200, step: 0.5 },
+            macroWavelengthM: { value: 3704, min: 120, max: 4000, step: 10 },
+            detail: { value: 4, min: 0.1, max: 4, step: 0.05 },
+            octaves: { value: 7, min: 1, max: 8, step: 1 },
+            persistence: { value: 0.05, min: 0.05, max: 0.99, step: 0.01 },
+            lacunarity: { value: 2.9, min: 1.05, max: 4.5, step: 0.05 },
+            wireframe: false,
+        },
+        { collapsed: true },
+    )
 
     return <StreamingTerrain mapSeed={mapSeed} {...terrain} />
 }

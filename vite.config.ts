@@ -8,9 +8,7 @@ const nm = `node_modules${sep}`
 const reactVendor = new RegExp(
     `${nm}(?:react${sep}|react-dom${sep}|react-router-dom${sep}|scheduler${sep})`,
 )
-const rapierVendor = new RegExp(
-    `${nm}(?:@react-three${sep}rapier|@dimforge${sep})`,
-)
+const rapierVendor = new RegExp(`${nm}(?:@react-three${sep}rapier|@dimforge${sep})`)
 const threeCoreVendor = new RegExp(`${nm}three${sep}`)
 const r3fVendor = new RegExp(`${nm}@react-three${sep}(?!rapier${sep})`)
 const levaVendor = new RegExp(`${nm}leva${sep}`)
@@ -23,6 +21,7 @@ const threeSatellite = new RegExp(
 
 export default defineConfig({
     plugins: [react()],
+    assetsInclude: ['**/*.glb', '**/*.gltf'],
     build: {
         chunkSizeWarningLimit: 1024,
         rolldownOptions: {

@@ -15,7 +15,9 @@ export function LandingPage() {
             if (h !== 'no') {
                 return h
             }
-            return globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'yes' : 'fade'
+            return globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches
+                ? 'yes'
+                : 'fade'
         })
 
     const onChromeTransitionEnd = (e: TransitionEvent<HTMLDivElement>) => {

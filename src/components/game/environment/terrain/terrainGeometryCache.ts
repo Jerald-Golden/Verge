@@ -1,5 +1,5 @@
 import { Cache, type PlaneGeometry } from 'three'
-import type { TerrainShapeParams } from '../utils/terrainNoise.ts'
+import type { TerrainShapeParams } from './terrainNoise.ts'
 
 /** Isolated from URL-based loader keys (`FileLoader`, etc.). */
 const CACHE_PREFIX = 'verge/terrain/'

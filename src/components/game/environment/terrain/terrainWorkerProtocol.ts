@@ -1,4 +1,4 @@
-import type { TerrainShapeParams } from '../utils/terrainNoise.ts'
+import type { TerrainShapeParams } from './terrainNoise.ts'
 
 export type TerrainChunkWorkerRequest = {
     id: number

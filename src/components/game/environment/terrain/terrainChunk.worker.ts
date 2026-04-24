@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-import { buildChunkPositionsFloat32 } from '../functions/terrainChunkMath.ts'
+import { buildChunkPositionsFloat32 } from './terrainChunkMath.ts'
 import type {
     TerrainChunkWorkerRequest,
     TerrainChunkWorkerResponse,

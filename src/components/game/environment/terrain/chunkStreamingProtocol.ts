@@ -1,4 +1,4 @@
-import type { ChunkTile } from '../functions/chunkStreamingMath.ts'
+import type { ChunkTile } from './chunkStreamingMath.ts'
 
 export type ChunkStreamingWorkerRequest = {
     id: number

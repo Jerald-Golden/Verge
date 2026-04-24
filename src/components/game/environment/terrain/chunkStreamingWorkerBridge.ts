@@ -1,4 +1,7 @@
-import type { ChunkStreamingWorkerRequest, ChunkStreamingWorkerResponse } from './chunkStreamingProtocol.ts'
+import type {
+    ChunkStreamingWorkerRequest,
+    ChunkStreamingWorkerResponse,
+} from './chunkStreamingProtocol.ts'
 
 export function createChunkStreamingWorker(
     onMessage: (data: ChunkStreamingWorkerResponse) => void,
